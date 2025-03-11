@@ -1,0 +1,27 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'  // Assurez-vous d'utiliser une version unique de Kotlin
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'  // Idem pour kotlin-stdlib-jdk8
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'  // Si vous utilisez kotlin-stdlib-jdk7
+        }
+    }
+}

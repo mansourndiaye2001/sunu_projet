@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "853476451490",
+    "project_id": "sunu-projet-26a78",
+    "storage_bucket": "sunu-projet-26a78.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853476451490:android:0b695598339d375717e3fb",
+        "android_client_info": {
+          "package_name": "com.domain.sunu_projet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnq2sU8HtExbJoeo5qhvn7PJgIgMQYZPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
