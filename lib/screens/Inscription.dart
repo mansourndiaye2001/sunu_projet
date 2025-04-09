@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sunu_projet/screens/Login.dart';
 import '../services/Firebase/auth.dart';
 import 'package:sunu_projet/widgets/notifaction.dart';
 
@@ -17,6 +23,8 @@ class _InscriptionState extends State<Inscription> {
   TextEditingController _password_ConfirmController = TextEditingController();
   final _forkey = GlobalKey<FormState>();
   bool _isLoading = false;
+  File ?file;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +57,41 @@ class _InscriptionState extends State<Inscription> {
                 ),
               ),
               SizedBox(height: 20),
+              /*
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green
+                      
+                ),
+                child: file==null ? null:
+                    Image.file(file!)
+                
+                
+              ),
+                 */
+
+               Center(
+                 child: CircleAvatar(
+                   backgroundImage: file==null ? null : FileImage(file!),
+                   radius: 50,
+                 ),
+               ),
+
+
+              IconButton(onPressed: ()async{
+                XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                if(xFile != null){
+                  setState(() {
+                    file = File(xFile.path);
+                  });
+                }
+              }, icon: Icon(Icons.camera_alt)),
+
+
+              SizedBox(height: 20,),
               TextFormField(
                 controller: _nomController,
                 decoration: InputDecoration(
@@ -131,27 +174,37 @@ class _InscriptionState extends State<Inscription> {
                       setState(() {
                         _isLoading = true;
                       });
-
                       try {
                         await Auth().createUserWithEmailAndPassword(
                           _emailController.text,
                           _passwordController.text,
                           _nomController.text,
+                          file!
                         );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Inscription Reussie "),
-                            backgroundColor: Colors.green,
-                          ),
+                        // Message de succès
+                        NotificationMessage.showSnackBar(
+                            context,
+                            "Inscription réussie ! Veuillez vérifier votre email pour valider votre compte.",
+                            isSuccess: true
                         );
+
+                        // Redirection vers la page de connexion après inscription
+                        Get.off(() => LoginPage());
                       } on FirebaseAuthException catch (e) {
-                        NotificationMessage.showSnackBar(context,"Inscription Avec Succes !!",isSuccess: true);
+                        // Message d'erreur approprié
+                        NotificationMessage.showSnackBar(
+                            context,
+                            "Erreur : ${e.message}",
+                            isSuccess: false
+                        );
                       } finally {
                         setState(() {
                           _isLoading = false;
                         });
                       }
+
+
                     }
                   },
                   child: _isLoading
@@ -172,7 +225,7 @@ class _InscriptionState extends State<Inscription> {
                     Text("Vous avez déjà un compte? "),
                     GestureDetector(
                       onTap: () {
-                        // Action pour la connexion
+                       Get.to(()=>LoginPage());
                       },
                       child: Text(
                         "Se connecter",

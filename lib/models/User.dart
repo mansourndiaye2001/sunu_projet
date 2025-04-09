@@ -1,8 +1,8 @@
 class UserModel {
   String? id;
   String? email;
-  String? status;
-  String? nom;
+  bool ? isBlocked;
+  int? nom;
   List<String>? projects;
 
   // Constructeur
@@ -11,7 +11,7 @@ class UserModel {
     this.email,
     this.nom,
     List<String>? projects,
-    this.status,
+    this.isBlocked,
   });
 
 

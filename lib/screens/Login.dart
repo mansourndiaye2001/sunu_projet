@@ -51,6 +51,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
                 TextFormField(
+                  autofocus: true,
+
                   controller: _emailController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email, color: Colors.black54),
@@ -75,11 +77,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
+                  autofocus: true,
+
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock, color: Colors.black54),
-                    suffixIcon: const Icon(Icons.visibility_off, color: Colors.black54),
+                    suffixIcon: const  Icon(Icons.visibility_off, color: Colors.black54
+
+                    ),
                     hintText: 'Mot de Passe',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -120,8 +126,8 @@ class _LoginPageState extends State<LoginPage> {
 
                         try {
                           await Auth().loginWithEmailAndPassword(
-                            _emailController.text,
-                            _passwordController.text,
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
                           );
                           // Handle successful login here, e.g., navigate to another screen.
                         } on FirebaseAuthException catch (e) {

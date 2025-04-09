@@ -3,6 +3,9 @@
         android:label="sunu_projet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
